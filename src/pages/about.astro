@@ -1,6 +1,32 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Card from "../components/Card.astro";
+
+import "../styles/global.css";
+
+const pageTitle = "私の楽しい仲間たち";
+
+const identity = {
+	firstName: "サラ",
+	country: "カナダ",
+	occupation: "技術ライター",
+	hobbies: ["写真", "バードウォッチング", "野球"],
+};
+
+const skills = [
+	"HTML",
+	"CSS",
+	"JavaScript",
+	"React",
+	"Astro",
+	"ドキュメントの執筆",
+];
+
+const happy = true;
+const finished = false;
+const goal = 3;
+
+const skillColor = "pink";
 ---
 
 <Layout title="Welcome to Astro.">
@@ -36,7 +62,50 @@ import Card from "../components/Card.astro";
 		<a href="/">home</a>
 		<a href="/about">about</a>
 		<a href="/blog">blog</a>
-		<h1>Welcome to <span class="text-gradient">About</span></h1>
+		<h1>Welcome to <span class="text-gradient">{pageTitle}</span></h1>
+		<p>以下は私に関するいくつかの事実です。</p>
+		<ul>
+			<li>私の名前は{identity.firstName}です。</li>
+			<li>
+				{identity.country}に住んでおり、{
+					identity.occupation
+				}として働いています。
+			</li>
+			{
+				identity.hobbies.length >= 2 && (
+					<li>
+						私の2つの趣味は{identity.hobbies[0]}と
+						{identity.hobbies[1]}です。
+					</li>
+				)
+			}
+		</ul>
+		<p>私のスキルは以下の通りです。</p>
+		<ul>
+			{skills.map((skill) => <li class="skill">{skill}</li>)}
+		</ul>
+
+		{
+			happy && (
+				<p>I am happy to be learning Astro! Astroを学べて幸せです！</p>
+			)
+		}
+
+		{
+			finished && (
+				<p>
+					I finished this tutorial! このチュートリアルを終えました！
+				</p>
+			)
+		}
+
+		{
+			goal === 3 ? (
+				<p>My goal is to finish in 3 days. 3日で終えるのが目標です。</p>
+			) : (
+				<p>My goal is not 3 days. 3日が目標ではありません。</p>
+			)
+		}
 		<p class="instructions">
 			To get started, open the directory <code>src/pages</code> in your project.<br
 			/>
@@ -68,7 +137,11 @@ import Card from "../components/Card.astro";
 	</main>
 </Layout>
 
-<style>
+<style define:vars={{ skillColor }}>
+	.skill {
+		color: var(--skillColor);
+		font-weight: bold;
+	}
 	main {
 		margin: auto;
 		padding: 1rem;
